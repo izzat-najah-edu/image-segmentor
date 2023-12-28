@@ -86,7 +86,7 @@ class MyApplication(QMainWindow, Ui_MainWindow):
                 # Save the image using OpenCV
                 cv2.imwrite(filename, self.cv_image)
 
-    # Parses the custom fileter, then applies it to the image
+    # Parses the custom filter, then applies it to the image
     def apply_custom_filter_handler(self):
         filter_text = self.textCustomFilter.toPlainText()
         kernel = np.array([[eval(num) for num in row.split(',')] for row in filter_text.split('\n')])

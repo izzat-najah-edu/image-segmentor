@@ -1,15 +1,21 @@
 # Image Segmentor
 
+![Screenshot](https://github.com/izzat5233/image-segmentor/assets/92182269/47423b2d-898f-4e2d-8cad-541c9f4cb9c5)
+
 ## Overview
 
-This project, developed in Python and using PyQt5 and OpenCV, provides a GUI application for image segmentation. It's
-part of the Digital Image Processing course at An-Najah National University.
+This PyQt-based application provides a GUI interface for performing various image segmentation operations,
+from detection filters to thresholding. The application is built with Python and OpenCV.
 
 ## Features
 
-- **Open Image**: Load images in various formats.
-- **Convert to Grayscale**: Change color images to grayscale.
-- **Segmentation Techniques**: Implements multiple segmentation methods such as thresholding, edge detection, and
-  region-based segmentation.
-- **User-Defined Filter**: Create and apply custom filters.
-- **Export Enhanced Images**: Save the processed images in desired formats.
+- Image Loading and Saving, from and to device disk.
+- Custom Filter with dynamic size.
+- Predefined Filters, including:
+    - Laplacian Filter: Used for edge detection.
+    - Laplacian of Gaussian Filter: performs smoothing then laplacian.
+    - Threshold Filter: Converts the image to a binary image with any thresh value.
+    - Point Detection Filter: Highlights the points in an image.
+    - Line Detection Filters: Includes horizontal, vertical, +45-degree, and -45-degree line detection.
+    - Edge Detection Filters: Users can choose between Sobel and Prewitt edge detectors for horizontal, vertical,
+      +45-degree, and -45-degree edges.
