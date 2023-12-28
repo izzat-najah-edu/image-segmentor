@@ -23,8 +23,20 @@ class MyApplication(QMainWindow, Ui_MainWindow):
 
         # Connect event handlers
         self.btnChooseImage.clicked.connect(self.choose_image_handler)
-        self.btnSaveResult.clicked.connect(self.save_result_handler)
+        self.btnSaveImage.clicked.connect(self.save_result_handler)
         self.btnApplyCustomFilter.clicked.connect(self.apply_custom_filter_handler)
+        self.btnFilterLog.clicked.connect(self.filter_log_handler)
+        self.btnFilterThreshold.clicked.connect(self.filter_threshold_handler)
+        self.btnFilterLaplacian.clicked.connect(self.filter_laplacian_handler)
+        self.btnFilterPointDetection.clicked.connect(self.filter_point_detection_handler)
+        self.btnFilterHorizontalLines.clicked.connect(self.filter_horizontal_lines_handler)
+        self.btnFilterVerticalLines.clicked.connect(self.filter_vertical_lines_handler)
+        self.btnFilterP45Lines.clicked.connect(self.filter_p45_lines_handler)
+        self.btnFilterM45Lines.clicked.connect(self.filter_m45_lines_handler)
+        self.btnFilterHorizontalEdges.clicked.connect(self.filter_horizontal_edges_handler)
+        self.btnFilterVerticalEdges.clicked.connect(self.filter_vertical_edges_handler)
+        self.btnFilterP45Edges.clicked.connect(self.filter_p45_edges_handler)
+        self.btnFilterM45Edges.clicked.connect(self.filter_m45_edges_handler)
 
     # Shows cv_image on QT graphics view component
     def update_display(self):
@@ -37,6 +49,25 @@ class MyApplication(QMainWindow, Ui_MainWindow):
             self.scene.clear()
             self.scene.addPixmap(pixmap)
             self.imageView.fitInView(self.scene.itemsBoundingRect(), Qt.KeepAspectRatio)
+
+    # Applies the given filter on cv_image
+    def apply_filter(self, kernel):
+        if not isinstance(kernel, np.ndarray):
+            kernel = np.array(kernel)
+        if self.cv_image is not None:
+            try:
+                filtered_image = cv2.filter2D(self.cv_image, -1, kernel)
+                self.cv_image = filtered_image
+            except Exception as e:
+                print("Error applying custom filter:", e)
+
+    # Decides which type of edge detector based on the radio group then applies it
+    def apply_edge_detector(self, sobel_kernel, prewitt_kernel):
+        if self.radioEdgeDetectorSobel.isChecked() == "sobel":
+            self.apply_filter(sobel_kernel)
+        else:
+            self.apply_filter(prewitt_kernel)
+        self.update_display()
 
     # Browse image file, stores it in cv_image, then displays it
     def choose_image_handler(self):
@@ -58,19 +89,129 @@ class MyApplication(QMainWindow, Ui_MainWindow):
     # Parses the custom fileter, then applies it to the image
     def apply_custom_filter_handler(self):
         filter_text = self.textCustomFilter.toPlainText()
-        if self.cv_image is not None:
-            kernel = np.array([[eval(num) for num in row.split(',')] for row in filter_text.split('\n')])
-            if kernel is not None:
-                self.apply_filter_to_image(kernel)
-                self.update_display()
+        kernel = np.array([[eval(num) for num in row.split(',')] for row in filter_text.split('\n')])
+        if kernel is not None:
+            self.apply_filter(kernel)
+            self.update_display()
 
-    # Applies the given filter on cv_image
-    def apply_filter_to_image(self, kernel):
-        try:
-            filtered_image = cv2.filter2D(self.cv_image, -1, kernel)
-            self.cv_image = filtered_image
-        except Exception as e:
-            print("Error applying custom filter:", e)
+    # Applies the laplacian of gaussian filter on cv_image
+    def filter_log_handler(self):
+        self.apply_filter([
+            [0, 0, -1, 0, 0],
+            [0, -1, -2, -1, 0],
+            [-1, -2, 16, -2, -1],
+            [0, -1, -2, -1, 0],
+            [0, 0, -1, 0, 0]
+        ])
+        self.update_display()
+
+    # Applies thresholding on cv_image
+    def filter_threshold_handler(self):
+        thresh = self.sliderThreshold.value()
+        _, self.cv_image = cv2.threshold(self.cv_image, thresh, 255, cv2.THRESH_BINARY)
+        self.update_display()
+
+    # Applies the laplacian filter on cv_image
+    def filter_laplacian_handler(self):
+        self.apply_filter([
+            [0, 1, 0],
+            [1, -4, 1],
+            [0, 1, 0]
+        ])
+        self.update_display()
+
+    # Applies points detector on cv_image
+    def filter_point_detection_handler(self):
+        self.apply_filter([
+            [-1, -1, -1],
+            [-1, 8, -1],
+            [-1, -1, -1]
+        ])
+        self.update_display()
+
+    # Applies horizontal lines detector on cv_image
+    def filter_horizontal_lines_handler(self):
+        self.apply_filter([
+            [-1, -1, -1],
+            [2, 2, 2],
+            [-1, -1, -1]
+        ])
+        self.update_display()
+
+    # Applies vertical lines detector on cv_image
+    def filter_vertical_lines_handler(self):
+        self.apply_filter([
+            [-1, 2, -1],
+            [-1, 2, -1],
+            [-1, 2, -1]
+        ])
+        self.update_display()
+
+    # Applies +45 lines detector on cv_image
+    def filter_p45_lines_handler(self):
+        self.apply_filter([
+            [-1, -1, 2],
+            [-1, 2, -1],
+            [2, -1, -1]
+        ])
+        self.update_display()
+
+    # Applies -45 lines detector on cv_image
+    def filter_m45_lines_handler(self):
+        self.apply_filter([
+            [2, -1, -1],
+            [-1, 2, -1],
+            [-1, -1, 2]
+        ])
+        self.update_display()
+
+    # Applies horizontal edges detector on cv_image
+    def filter_horizontal_edges_handler(self):
+        self.apply_edge_detector([
+            [-1, -2, -1],
+            [0, 0, 0],
+            [1, 2, 1]
+        ], [
+            [-1, -1, -1],
+            [0, 0, 0],
+            [1, 1, 1]
+        ])
+
+    # Applies vertical edges detector on cv_image
+    def filter_vertical_edges_handler(self):
+        self.apply_edge_detector([
+            [-1, 0, 1],
+            [-2, 0, 2],
+            [-1, 0, 1]
+        ], [
+            [-1, 0, 1],
+            [-1, 0, 1],
+            [-1, 0, 1]
+        ])
+
+    # Applies +45 edges detector on cv_image
+    def filter_p45_edges_handler(self):
+        self.apply_edge_detector([
+            [-2, -1, 0],
+            [-1, 0, 1],
+            [0, 1, 2]
+        ], [
+            [-1, -1, 0],
+            [-1, 0, 1],
+            [0, 1, 1]
+        ])
+
+    # Applies -45 edges detector on cv_image
+    def filter_m45_edges_handler(self):
+        self.apply_edge_detector([
+            [0, 1, 2],
+            [-1, 0, 1],
+            [-2, -1, 0]
+        ], [
+            [0, 1, 1],
+            [-1, 0, 1],
+            [-1, -1, 0]
+        ])
 
 
 if __name__ == "__main__":
