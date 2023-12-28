@@ -1,3 +1,4 @@
-pyqt5
+pyqt5~=5.15.9
 pyqt5-tools
-opencv-python
+opencv-python~=4.8.1.78
+numpy~=1.26.2
