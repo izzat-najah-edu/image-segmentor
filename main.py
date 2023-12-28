@@ -1,51 +1,17 @@
 import sys
-import cv2
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QFileDialog
-from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from application import Ui_MainWindow  # Replace with your file name
 
 
-class MainWindow(QMainWindow):
+class MyApplication(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-
-        self.init_ui()
-
-    def init_ui(self):
-        self.setWindowTitle('OpenCV and PyQt5 Demo')
-        self.setGeometry(100, 100, 800, 600)
-
-        self.label = QLabel(self)
-        self.label.resize(640, 480)
-        self.label.setAlignment(Qt.AlignCenter)
-        self.label.setText('Load an image using the button below')
-
-        self.button = QPushButton('Load Image', self)
-        self.button.move(350, 520)
-        self.button.clicked.connect(self.loadImage)
-
-    def loadImage(self):
-        imagePath, _ = QFileDialog.getOpenFileName()
-        if imagePath:
-            self.displayImage(imagePath)
-
-    def displayImage(self, imagePath):
-        img = cv2.imread(imagePath)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-        height, width, channel = img.shape
-        step = channel * width
-        qImg = QImage(img.data, width, height, step, QImage.Format_RGB888)
-
-        self.label.setPixmap(QPixmap.fromImage(qImg))
+        self.setupUi(self)
+        # Additional initialization or event binding can go here
 
 
-def main():
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_win = MainWindow()
-    main_win.show()
+    mainWindow = MyApplication()
+    mainWindow.show()
     sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    main()
