@@ -30,7 +30,7 @@
    <string notr="true">font: 12pt &quot;Microsoft Sans Serif&quot;;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnChooseImage">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -43,7 +43,7 @@
      <string>Choose Image</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btnSaveResult">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -69,13 +69,13 @@
      <string notr="true">font-size: 10px;</string>
     </property>
     <property name="text">
-     <string>Changing the image will remove any unsaved progress</string>
+     <string>Changing the image will discard any unsaved progress</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="textCustomFilter">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -171,7 +171,7 @@ p, li { white-space: pre-wrap; }
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="btnApplyCustomFilter">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -184,7 +184,7 @@ p, li { white-space: pre-wrap; }
      <string>Apply</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="btnFilterLogarithmic">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -197,7 +197,7 @@ p, li { white-space: pre-wrap; }
      <string>Logarithmic</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="btnFilterThreshold">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -210,7 +210,7 @@ p, li { white-space: pre-wrap; }
      <string>Threshold</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="btnFilterLaplacian">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -223,7 +223,7 @@ p, li { white-space: pre-wrap; }
      <string>Laplacian</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="btnFilterPointDetection">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -236,7 +236,7 @@ p, li { white-space: pre-wrap; }
      <string>Point Detection</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="btnFilterVerticalLines">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -249,7 +249,7 @@ p, li { white-space: pre-wrap; }
      <string>Vertical Lines</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="btnFilterP45Lines">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -262,7 +262,7 @@ p, li { white-space: pre-wrap; }
      <string>+45 Lines</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="btnFilterM45Lines">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -275,7 +275,7 @@ p, li { white-space: pre-wrap; }
      <string>-45 Lines</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_11">
+   <widget class="QPushButton" name="btnFilterHorizontalLines">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -288,7 +288,7 @@ p, li { white-space: pre-wrap; }
      <string>Horizontal Lines</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_12">
+   <widget class="QPushButton" name="btnFilterVerticalEdges">
     <property name="geometry">
      <rect>
       <x>630</x>
@@ -301,7 +301,7 @@ p, li { white-space: pre-wrap; }
      <string>Vertical Edges</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_13">
+   <widget class="QPushButton" name="btnFilterP45Edges">
     <property name="geometry">
      <rect>
       <x>780</x>
@@ -314,7 +314,7 @@ p, li { white-space: pre-wrap; }
      <string>+45 Edges</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_14">
+   <widget class="QPushButton" name="btnFilterM45Edges">
     <property name="geometry">
      <rect>
       <x>780</x>
@@ -327,7 +327,7 @@ p, li { white-space: pre-wrap; }
      <string>-45 Edges</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_15">
+   <widget class="QPushButton" name="btnFilterHorizontalEdges">
     <property name="geometry">
      <rect>
       <x>630</x>
@@ -340,7 +340,7 @@ p, li { white-space: pre-wrap; }
      <string>Horizontal Edges</string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="imageView">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -350,7 +350,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: black;</string>
+     <string notr="true"/>
     </property>
    </widget>
   </widget>
